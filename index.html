@@ -11,17 +11,24 @@
 <body>
     <section class="sec_home">
 
-        <h1>Badolato</h1>
-        <div>
-            <img src="../multimeda/imagen_home.jpg" alt="imagen home">
-        </div>
+        <h1>BADOLATO</h1>
         <h2>Pasteleria artesanal</h2>
-        <h3>Primer Entrega</h3>
-        <p>Simulador interactivo, para registrarse o logearse y luego presupuestar un pedido en la pagina.</p>
-        <h3>Segunda Entrega</h3>
-        <p>En esta segunda entrega busque armar un carrito donde se almacenen los pedidos del usuario, mostrando productos y montos. Por ultimo dando la opcion de agregar o quitar productos de la lista. </p>
+        <div>
+            <img src="../multimedia/imagen_home.jpg" alt="imagen home">
+        </div>
+        <h2>Productos:</h2>
+        <p class="botonCarrito"><a href="#contenedorCarrito">Carrito</a></p>
+        <div id="contenedorProductos"></div>
+        <div id="divTuPedido">
+            <h2 id="tuPedido">Tu pedido: <span id="totalHtml"></span></h2>
+        <button id="borrar">Borrar</button>
+        </div>
+        
+        
+        <div id="contenedorCarrito"></div>
 
     </section>
+
     <script src="./js/index.js"></script>
 </body>
 

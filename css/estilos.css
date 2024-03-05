@@ -1,31 +1,124 @@
 body {
-    
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .sec_home {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
     border-radius: 35px;
-    width: 60%;
+    width: 70%;
     padding: 3%;
     margin: 3% auto;
-    background-color: rgb(250, 202, 209);
+    background-color: #fbe1fb;
 }
 
-.sec_home h1{
+.sec_home h1 {
     text-align: center;
 }
 
-.sec_home div{
-    width: 70%;
-    margin: 2% auto;
-
+.sec_home h2 {
+    margin: 10px 0 0 0;
 }
 
-.sec_home div img{
+.sec_home div {
     width: 100%;
+    margin: 2% auto;
+}
+
+.sec_home div img {
+    width: 100%;
+}
+#tuPedido {
+    width: 60%;
+    display: flex;
+}
+
+#divTuPedido{
+    display: flex;
+    margin: 0;
+}
+
+/* Productos */
+
+#contenedorProductos, #contenedorCarrito {
+    display: flex;
+    flex-wrap: wrap;
+    width: 98%;
+}
+
+.card {
+    border-radius: 40px 0 40px 0;
+    margin: 10px auto !important;
+    width: 200px !important;
+    padding-bottom: 2%;
+    background-color: #fdf0fd;
+}
+
+.card h3 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.card p {
+    margin-left: 5%;
+}
+
+.card button {
+    margin-left: 51%;
+    margin-bottom: 12%;
+    height: 15%;
+    border-radius: 50% 30%;
+    text-transform: uppercase;
+    background-color: white;
+    border-color: transparent;
+    color: pink;
+    font-weight: bold;
+}
+
+.card button:hover {
+    color: palevioletred;
+    text-decoration: underline;
+}
+
+
+/*Carrito*/
+
+/*Botones:*/
+.botonCarrito {
+    text-align: end;
+    margin: 0 3% 0 0;
+}
+
+.botonCarrito a {
+    text-decoration: none;
+    color: pink;
+    background-color: white;
+    padding: 1%;
+    border-radius: 50% 30%;
+}
+
+.botonCarrito a:hover {
+    color: palevioletred;
+    text-decoration: underline;
+}
+/*-------------------------------------------------*/
+
+#borrar {
+    width: 15%;
+    color: pink;
+    background-color: white;
+    padding: 2%;
+    margin-left: 20%;
+    border-radius: 50% 30%;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#borrar:hover{
+    color: palevioletred;
+    text-decoration: underline;
+
 }
