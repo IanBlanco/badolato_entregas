@@ -1,0 +1,7 @@
+[
+    {"id": 1, "nombre": "Torta", "imagen": "multimedia/prod_1.jpg", "valor": 10000, "unidades": 1, "personalizada": false},
+    {"id": 2, "nombre": "Galletitas", "imagen": "multimedia/prod_2.jpg", "valor": 1500, "unidades": 1, "personalizada": false},
+    {"id": 3, "nombre": "Cupcakes", "imagen": "multimedia/prod_3.jpg", "valor": 2500, "unidades": 1, "personalizada": false},
+    {"id": 4, "nombre": "Alfajores", "imagen": "multimedia/prod_4.jpg", "valor": 1200, "unidades": 1, "personalizada": false}
+  ]
+  

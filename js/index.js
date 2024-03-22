@@ -1,117 +1,142 @@
-//Productos
+// Mostrar los productos en la página
+function mostrarProductos(productos) {
+  let contenedorProductos = document.getElementById("contenedorProductos");
+  let cardHtml = productos.map(function (producto) {
+      return `
+          <div class="card">
+              <h3>${producto.nombre}</h3>
+              <img src="${producto.imagen}" alt="${producto.nombre}">
+              <p>Valor: $${producto.valor}</p>
+              <p>Unidades: ${producto.unidades}</p>
+              <button class="botonAgregar" data-id="${producto.id}">Agregar</button>
+          </div>
+      `;
+  });
 
-function Producto(id, nombre, imagen, valor, unidades, personalizada) {
-  this.id = id;
-  this.nombre = nombre;
-  this.imagen = imagen;
-  this.valor = valor;
-  this.unidades = unidades;
-  this.personalizada = personalizada;
+  contenedorProductos.innerHTML = cardHtml.join('');
+
+  let botonesAgregar = document.querySelectorAll(".botonAgregar");
+  botonesAgregar.forEach(function (boton) {
+      boton.addEventListener('click', function () {
+          let idProducto = parseInt(boton.getAttribute('data-id'));
+          agregarAlCarrito(idProducto, productos);
+      });
+  });
 }
 
-// lista de productos
+// Cargar los productos
+function cargarProductos() {
+  const prod = new XMLHttpRequest();
+  prod.open('GET', 'js/productos.json', true);
+  prod.onload = function () {
+      if (prod.status === 200) {
+          const productos = JSON.parse(prod.responseText);
+          mostrarProductos(productos);
+      }
+  };
+  prod.send();
+}
 
-const PRODUCTOS = [
-  new Producto(1, "Torta", "multimedia/prod_1.jpg", 10000, 1, false),
-  new Producto(2, "Galletitas", "multimedia/prod_2.jpg", 1500, 1, false),
-  new Producto(3, "Cupcakes", "multimedia/prod_3.jpg", 2500, 1, false),
-  new Producto(4, "Alfajores", "multimedia/prod_4.jpg", 1200, 1, false)
-];
+window.addEventListener('load', cargarProductos);
 
-let contenedorProductos = document.getElementById("contenedorProductos");
-
-// Crear  HTML => CARD
-let cardHtml = PRODUCTOS.map(function (PRODUCTOS) {
-
-  return `
-      <div class="card">
-        <h3>${PRODUCTOS.nombre}</h3>
-        <img src="${PRODUCTOS.imagen}" alt="${PRODUCTOS.nombre}">
-        <p>Valor: $${PRODUCTOS.valor}</p>
-        <p>Unidades: ${PRODUCTOS.unidades}</p>
-        <button class="botonAgregar" data-id="${PRODUCTOS.id}">Agregar</button>
-      </div>
-    `;
-    
-});
-
-contenedorProductos.innerHTML = cardHtml.join('');
-
-//Carrito:
-
-const CARRITO = [];
-
+let CARRITO = [];
 let contenedorCarrito = document.getElementById("contenedorCarrito");
 
-function totalCarrito() {
-
-  let total = 0;
-  CARRITO.forEach(producto => {
-    total += producto.valor * producto.unidades;
-  });
-
-  return total;
-
+// Agregar un producto al carrito
+function agregarAlCarrito(idProducto, productos) {
+  const prod = productos.find(producto => producto.id === idProducto);
+  if (prod) {
+      const INDICE = CARRITO.findIndex(item => item.id === prod.id);
+      INDICE !== -1 ? CARRITO[INDICE].unidades += 1 : CARRITO.push({ ...prod, unidades: 1 });
+  }
+  mostrarCarrito();
+  guardarCarritoEnStorage();
 }
 
-function totalHtml() {
-  const TOTAL_HTML = document.getElementById("totalHtml");
-  TOTAL_HTML.textContent = `$${totalCarrito()}`;
-}
-
-function agregarAlCarrito(PRODUCTOS) {
-
-  const INDICE = CARRITO.findIndex(item => item.id === PRODUCTOS.id);
-
-  INDICE !== -1 ? CARRITO[INDICE].unidades += 1 : CARRITO.push(PRODUCTOS);
-
-  totalCarrito();
-
-  // Crear  HTML => CARD
+// Mostrar el carrito
+function mostrarCarrito() {
   let cardCarritoHtml = CARRITO.map(function (producto) {
-
-    return `
-      <div class="card">
-        <h3>${producto.nombre}</h3>
-        <img src="${producto.imagen}" alt="${producto.nombre}">
-        <p>Valor: $${producto.valor * producto.unidades}</p>
-        <p>Unidades: ${producto.unidades}</p>
-        <button class="botonQuitar" data-id="${producto.id}">Quitar</button>
-      </div>
-    `;
-
+      return `
+          <div class="card">
+              <h3>${producto.nombre}</h3>
+              <img src="${producto.imagen}" alt="${producto.nombre}">
+              <p>Valor: $${producto.valor * producto.unidades}</p>
+              <p>Unidades: ${producto.unidades}</p>
+              <button class="botonQuitar" data-id="${producto.id}">Quitar</button>
+          </div>
+      `;
   });
+
   contenedorCarrito.innerHTML = cardCarritoHtml.join('');
 
-  totalHtml()
+  // Botones "Quitar"
+  let botonesQuitar = document.querySelectorAll(".botonQuitar");
+  botonesQuitar.forEach(function (boton) {
+      boton.addEventListener('click', function () {
+          let idProducto = parseInt(boton.getAttribute('data-id'));
+          quitarDelCarrito(idProducto);
+      });
+  });
+
+  totalHtml();
 }
 
-let botonAgregar = document.querySelectorAll(".botonAgregar");
+// Guardar en localStorage
+function guardarCarritoEnStorage() {
+  localStorage.setItem('carrito', JSON.stringify(CARRITO));
+}
 
-botonAgregar.forEach(function (boton) {
-  boton.addEventListener('click', function () {
+// Cargar el carrito desde localStorage
+function cargarCarritoDesdeStorage() {
+  const carritoGuardado = localStorage.getItem('carrito');
+  if (carritoGuardado) {
+      CARRITO = JSON.parse(carritoGuardado);
+      mostrarCarrito();
+  }
+}
 
-    let idProducto = parseInt(boton.getAttribute('data-id'));
-    let prod = PRODUCTOS.find(function (producto) {
-      return producto.id === idProducto;
-    });
+// Cargar el carrito al cargar la página
+window.addEventListener('load', cargarCarritoDesdeStorage);
 
-    if (prod) {
-      agregarAlCarrito(prod);
-    }
-
+// Calcular el total del carrito y mostrarlo
+function totalHtml() {
+  let total = 0;
+  CARRITO.forEach(producto => {
+      total += producto.valor * producto.unidades;
   });
-});
+  const TOTAL_HTML = document.getElementById("totalHtml");
+  TOTAL_HTML.textContent = `$${total}`;
+}
 
-//Borrar 
+// Quitar un producto del carrito
+function quitarDelCarrito(idProducto) {
+  const indice = CARRITO.findIndex(producto => producto.id === idProducto);
+  if (indice !== -1) {
+      if (CARRITO[indice].unidades > 1) {
+          CARRITO[indice].unidades--;
+      } else {
+          CARRITO.splice(indice, 1);
+      }
+      mostrarCarrito(); 
+      guardarCarritoEnStorage();
+  }
+}
 
+// Vaciar el carrito
 function vaciarCarrito() {
-
   CARRITO.length = 0;
   contenedorCarrito.innerHTML = '';
+  guardarCarritoEnStorage();
   totalHtml();
 
+  Swal.fire({
+      title: 'Carrito vacío!',
+      text: 'Has eliminado todos los elementos del carrito.',
+      icon: 'warning',
+      confirmButtonText: 'OK'
+  });
 }
 
+// Evento para vaciar el carrito
 const VACIAR_CARRITO = document.getElementById("borrar");
 VACIAR_CARRITO.addEventListener('click', vaciarCarrito);
