@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="./css/estilos.css">
+    <link rel="stylesheet" href="./css/estilos.css">
     <title>Badolato</title>
 </head>
 
@@ -14,24 +14,41 @@
         <h1>BADOLATO</h1>
         <h2>Pasteleria artesanal</h2>
         <div>
-            <img src="../multimedia/imagen_home.jpg" alt="imagen home">
+            <img src="multimedia/imagen_home.jpg" alt="imagen home">
         </div>
         <h2>Productos:</h2>
-        <p class="botonCarrito"><a href="#contenedorCarrito">Carrito</a></p>
+        <!--<p class="botonCarrito"><a href="#contenedorCarrito">Carrito</a></p>
+        -->
+        
         <div id="contenedorProductos"></div>
         <div id="divTuPedido">
             <h2 id="tuPedido">Tu pedido: <span id="totalHtml"></span></h2>
-        <button id="borrar">Vaciar</button>
+            <button id="borrar">Vaciar</button>
         </div>
-        
-        
+
+
         <div id="contenedorCarrito"></div>
+
+        <div id="datosUsuario">
+            <div>
+                <label id="nombre_label" for="nombre">Nombre:</label>
+                <input type="text" id="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div>
+                <label for="fecha">Fecha de entrega:</label>
+                <input type="date" id="fecha" required>
+            </div>
+            <button id="generarMensaje">ENVIAR</button>
+        </div>
+
+
+
 
     </section>
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- <script src="./js/index.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
